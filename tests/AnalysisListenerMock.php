@@ -21,7 +21,7 @@ class AnalysisListenerMock implements Listener {
     }
 
     public $begin_run_called_with = false;
-    public function begin_run($commit_hash) {
+    public function begin_run($commit_hash, $commit_author) {
         $this->begin_run_called_with = $commit_hash;
     }
 

@@ -15,11 +15,11 @@ use Lechimp\Dicto\Analysis\Violation;
 
 class ReportQueriesTest extends ReportTestBase {
     public function test_last_run() {
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $cur_run = $this->queries->last_run();
 
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $next_run = $this->queries->last_run();
 
@@ -27,10 +27,10 @@ class ReportQueriesTest extends ReportTestBase {
     }
 
     public function test_run_before() {
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $first_run = $this->queries->last_run();
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
 
         $cur_run = $this->queries->last_run();
@@ -41,12 +41,12 @@ class ReportQueriesTest extends ReportTestBase {
     }
 
     public function test_run_with_different_commit_before() {
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $first_run = $this->queries->last_run();
-        $this->db->begin_run("#COMMIT_HASH2#");
+        $this->db->begin_run("#COMMIT_HASH2#", "#COMMIT_AUTHOR2#");
         $this->db->end_run();
-        $this->db->begin_run("#COMMIT_HASH2#");
+        $this->db->begin_run("#COMMIT_HASH2#", "#COMMIT_AUTHOR2#");
         $this->db->end_run();
 
         $cur_run = $this->queries->last_run();
@@ -56,19 +56,19 @@ class ReportQueriesTest extends ReportTestBase {
     }
 
     public function test_last_run_for() {
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $run1 = $this->queries->last_run();
 
-        $this->db->begin_run("#COMMIT_HASH#");
+        $this->db->begin_run("#COMMIT_HASH#", "#COMMIT_AUTHOR#");
         $this->db->end_run();
         $run2 = $this->queries->last_run();
 
-        $this->db->begin_run("#COMMIT_HASH2#");
+        $this->db->begin_run("#COMMIT_HASH2#", "#COMMIT_AUTHOR2#");
         $this->db->end_run();
         $run3 = $this->queries->last_run();
 
-        $this->db->begin_run("#COMMIT_HASH3#");
+        $this->db->begin_run("#COMMIT_HASH3#", "#COMMIT_AUTHOR3#");
         $this->db->end_run();
         $run4 = $this->queries->last_run();
 
@@ -82,7 +82,8 @@ class ReportQueriesTest extends ReportTestBase {
 
     public function test_run_info() {
         $hash = "#COMMIT_HASH#";
-        $this->db->begin_run($hash);
+        $author = "#COMMIT_AUTHOR#";
+        $this->db->begin_run($hash, $author);
         $this->db->end_run();
         $run = $this->queries->last_run();
 
@@ -291,7 +292,8 @@ class ReportQueriesTest extends ReportTestBase {
         $ruleset = new Rules\Ruleset($vars, [$rule1]);
 
         $commit1 = "#COMMIT_1#";
-        $this->db->begin_run($commit1);
+        $commit_auhtor1 = "#COMMIT_AUHTOR_1#";
+        $this->db->begin_run($commit1, $commit_auhtor1);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -313,7 +315,8 @@ class ReportQueriesTest extends ReportTestBase {
         $ruleset = new Rules\Ruleset($vars, [$rule1]);
 
         $commit1 = "#COMMIT_1#";
-        $this->db->begin_run($commit1);
+        $commit_auhtor1 = "#COMMIT_AUHTOR_1#";
+        $this->db->begin_run($commit1, $commit_auhtor1);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -325,7 +328,8 @@ class ReportQueriesTest extends ReportTestBase {
         $run1 = $this->queries->last_run();
 
         $commit2 = "#COMMIT_2#";
-        $this->db->begin_run($commit2);
+        $commit_auhtor2 = "#COMMIT_AUHTOR_2#";
+        $this->db->begin_run($commit2,$commit_auhtor2);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -348,7 +352,8 @@ class ReportQueriesTest extends ReportTestBase {
         $ruleset = new Rules\Ruleset($vars, [$rule1]);
 
         $commit1 = "#COMMIT_1#";
-        $this->db->begin_run($commit1);
+        $commit_auhtor1 = "#COMMIT_AUHTOR_1#";
+        $this->db->begin_run($commit1, $commit_auhtor1);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -362,7 +367,8 @@ class ReportQueriesTest extends ReportTestBase {
         $run1 = $this->queries->last_run();
 
         $commit2 = "#COMMIT_2#";
-        $this->db->begin_run($commit2);
+        $commit_auhtor2 = "#COMMIT_AUHTOR_2#";
+        $this->db->begin_run($commit2, $commit_auhtor2);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(

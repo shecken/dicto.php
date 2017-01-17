@@ -60,8 +60,9 @@ abstract class ReportTestBase extends PHPUnit_Framework_TestCase {
         $ruleset = new Rules\Ruleset($vars, [$rule1, $rule2]);
 
         $commit1 = "#COMMIT_1#";
+        $commit_auhtor1 = "#COMMIT_AUHTOR_1#";
         // One violation of rule1, no violation of rule2
-        $this->db->begin_run($commit1);
+        $this->db->begin_run($commit1, $commit_auhtor1);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -71,9 +72,10 @@ abstract class ReportTestBase extends PHPUnit_Framework_TestCase {
         $this->db->end_run();
 
         $commit2 = "#COMMIT_2#";
+        $commit_auhtor2 = "#COMMIT_AUHTOR_2#";
         // One new violation of rule1, previous violation still exists.
         // One new violation of rule2.
-        $this->db->begin_run($commit2);
+        $this->db->begin_run($commit2, $commit_auhtor2);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->report_violation(
@@ -89,9 +91,10 @@ abstract class ReportTestBase extends PHPUnit_Framework_TestCase {
         $this->db->end_run();
 
         $commit3 = "#COMMIT_3#";
+        $commit_auhtor3 = "#COMMIT_AUHTOR_3#";
         // All violations of rule1 resolved.
         // Two new violation of rule2, previous violation resolved.
-        $this->db->begin_run($commit3);
+        $this->db->begin_run($commit3, $commit_auhtor3);
         $this->db->begin_ruleset($ruleset);
         $this->db->begin_rule($rule1);
         $this->db->end_rule();

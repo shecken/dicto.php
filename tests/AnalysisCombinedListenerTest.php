@@ -23,7 +23,7 @@ class AnalysisCombinedListenerGeneratorsTest extends PHPUnit_Framework_TestCase 
     }
 
     public function test_begin_run() {
-        $this->c->begin_run("foo");
+        $this->c->begin_run("foo", "bar");
 
         $this->assertEquals("foo", $this->al1->begin_run_called_with);
         $this->assertEquals("foo", $this->al2->begin_run_called_with);
