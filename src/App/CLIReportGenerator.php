@@ -28,7 +28,7 @@ class CLIReportGenerator implements Listener {
     /**
      * @inheritdoc
      */
-    public function begin_run($commit_hash) {
+    public function begin_run($commit_hash, $commit_author) {
     }
 
     /**

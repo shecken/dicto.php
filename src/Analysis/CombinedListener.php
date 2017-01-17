@@ -41,9 +41,9 @@ class CombinedListener implements Listener {
     /**
      * @inheritdocs
      */
-    public function begin_run($commit_hash) {
+    public function begin_run($commit_hash, $commit_author) {
         foreach ($this->listeners as $g) {
-            $g->begin_run($commit_hash);
+            $g->begin_run($commit_hash, $commit_author);
         }
     }
 

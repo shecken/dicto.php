@@ -38,8 +38,9 @@ class ResultDB extends DB implements Listener {
      * @param   string  $commit_hash
      * @return  null
      */
-    public function begin_run($commit_hash) {
+    public function begin_run($commit_hash, $commit_author) {
         assert('is_string($commit_hash)');
+        assert('is_string($commit_author)');
         $this->builder()
             ->insert("runs")
             ->values(array
@@ -48,6 +49,7 @@ class ResultDB extends DB implements Listener {
             ->setParameter(0, $commit_hash)
             ->execute();
         $this->current_run_id = (int)$this->connection->lastInsertId();
+        $this->current_author = $commit_author;
     }
 
     /**
