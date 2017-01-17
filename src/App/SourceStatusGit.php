@@ -45,6 +45,7 @@ class SourceStatusGit implements SourceStatus {
      */
     public function commit_author($commit_hash) {
         assert('is_string($commit_hash)');
+        $escaped_path = escapeshellarg($this->path);
         $command = "git -C $escaped_repo_path --no-pager show -s --format='%an' $commit_hash";
         exec($command, $output, $returned);
         if ($returned !== 0) {
