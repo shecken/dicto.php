@@ -39,4 +39,13 @@ class SourceStatusGit implements SourceStatus {
         }
         return $output[0];
     }
+
+    public function commit_author($commit_hash) {
+       $command = "git --no-pager show -s --format='%an' $commit_hash";
+       exec($command, $output, $returned);
+        if ($returned !== 0) {
+            throw new \RuntimeException(implode("\n", $output));
+        }
+        return $output[0];
+    }
 }
