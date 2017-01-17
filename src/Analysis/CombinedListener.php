@@ -100,4 +100,13 @@ class CombinedListener implements Listener {
             $g->report_violation($violation);
         }
     }
+
+    /**
+     * @inheritdocs
+     */
+    public function report_violation_ranking() {
+        foreach ($this->listeners as $g) {
+            $g->report_violation_ranking();
+        }
+    }
 }

@@ -166,7 +166,37 @@ class ResultDB extends DB implements Listener {
             ->execute();
     }
 
+    /**
+     * @inheritdocs
+     */
+    public function report_violation_ranking() {
+        $cur_run = $this->getQueries()->last_run();
+        $prev_run = $this->getQueries()->run_with_different_commit_before($cur_run);
+        $added = $this->getQueries()->count_added_violations($prev_run, $cur_run);
+        $resolved = $this->getQueries()->count_resolved_violations($prev_run, $cur_run);
+
+        $ranking = $this->getQueries()->ranking_for($this->current_author);
+
+        $ranking["added"] += $added;
+        $ranking["resolved"] += $resolved;
+
+        $this->getQueries()->update_ranking_for($this->current_author, $ranking);
+    }
+
     // Helpers
+
+    /**
+     * Get a queries object
+     *
+     * @return Queries
+     */
+    protected function getQueries() {
+        if($this->queries === null) {
+            $this->queries = new Queries($this);
+        }
+
+        return $this->queries;
+    }
 
 
     /**

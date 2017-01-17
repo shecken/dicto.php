@@ -82,4 +82,13 @@ class CLIReportGenerator implements Listener {
     public function report_violation(Violation $violation) {
         $this->current_violations[] = $violation;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function report_violation_ranking() {
+        foreach ($this->listeners as $g) {
+            $g->report_violation_ranking();
+        }
+    }
 }

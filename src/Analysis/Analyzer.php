@@ -71,6 +71,8 @@ class Analyzer {
             $this->listener->end_rule();
         }
         $this->listener->end_ruleset();
+
+        $this->listener->report_violation_ranking();
     }
 
     public function build_violation($info) {

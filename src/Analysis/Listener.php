@@ -80,4 +80,9 @@ interface Listener {
      * @return  null
      */
     public function report_violation(Violation $violation);
+
+    /**
+     * Tell the listener to update the author violation ranking
+     */
+    public function report_violation_ranking();
 }
