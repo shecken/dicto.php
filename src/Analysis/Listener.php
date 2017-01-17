@@ -21,9 +21,10 @@ interface Listener {
      * Tell the listener that a run begins.
      *
      * @param   string  $commit_hash
+     * @param   string  $commit_author
      * @return  null
      */
-    public function begin_run($commit_hash);
+    public function begin_run($commit_hash, $commit_author);
 
     /**
      * Tell the listener that the run ended.
