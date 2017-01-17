@@ -20,4 +20,11 @@ interface SourceStatus {
      * @return  string
      */
     public function commit_hash();
+
+    /**
+     * Get the author of commit hash.
+     *
+     * @param string  $commit_hash
+     */
+    public function commit_author($commit_hash);
 }

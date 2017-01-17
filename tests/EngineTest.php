@@ -103,7 +103,7 @@ class SourceStatusMock implements SourceStatus {
         return $this->commit_hash;
     }
 
-    public function commit_author() {
+    public function commit_author($commit_hash) {
         return $this->commit_author;
     }
 }

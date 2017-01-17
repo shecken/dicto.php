@@ -30,6 +30,27 @@ class SourceStatusTest extends PHPUnit_Framework_TestCase {
         $source_status = $this->source_status_git();
 
         $this->assertInternalType("string", $source_status->commit_hash());
-        $this->assertEquals($expected[0], $source_status->commit_hash());       
+        $this->assertEquals($expected[0], $source_status->commit_hash());
+
+        return $expected;
+    }
+
+    /**
+     * @depends test_correct_commit_hash
+     */
+    public function test_correct_commit_author($args) {
+        $escaped_repo_path = escapeshellarg($this->repo_path);
+        $commit_hash = $args[0];
+
+        $command = "git -C $escaped_repo_path --no-pager show -s --format='%an' $commit_hash";
+
+        exec($command, $expected, $returned);
+
+        $this->assertEquals(0, $returned, implode("\n", $expected));
+
+        $source_status = $this->source_status_git();
+
+        $this->assertInternalType("string", $source_status->commit_author($commit_hash));
+        $this->assertEquals($expected[0], $source_status->commit_author($commit_hash));
     }
 }
