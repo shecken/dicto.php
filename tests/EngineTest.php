@@ -98,8 +98,13 @@ class IndexDBFactoryMock extends DB\IndexDBFactory {
 
 class SourceStatusMock implements SourceStatus {
     public $commit_hash = "commit_hash";
+    public $commit_author = "commit_author";
     public function commit_hash() {
         return $this->commit_hash;
+    }
+
+    public function commit_author() {
+        return $this->commit_author;
     }
 }
 

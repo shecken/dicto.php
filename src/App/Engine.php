@@ -121,7 +121,8 @@ class Engine {
     protected function run_analysis(Index $index) {
         $this->log->notice("Running analysis...");
         $commit_hash = $this->source_status->commit_hash();
-        $this->analysis_listener->begin_run($commit_hash);
+        $commit_author = $this->source_status->commit_author($commit_hash);
+        $this->analysis_listener->begin_run($commit_hash, $commit_author);
         $analyzer = $this->analyzer_factory->build($index, $this->analysis_listener);
         $this->with_time_measurement
             ( function ($s) { return "Analysis took $s seconds to run."; }
