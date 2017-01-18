@@ -16,6 +16,26 @@ class Queries {
     }
 
     /**
+     * Get ids of all runs
+     *
+     * @return int[]
+     */
+    public function all_runs() {
+        $b = $this->result_db->builder();
+        $q = $b
+            ->select("id")
+            ->from("runs")
+            ->orderBy("id", "ASC");
+
+        $rows = $q->execute();
+        $res = 0;
+        while($r = $rows->fetch()) {
+            $res[] = (int)$r["id"];
+        }
+        return $res;
+    }
+
+    /**
      * Get the id of the last run.
      *
      * @return  int
@@ -116,7 +136,7 @@ class Queries {
     public function run_info($run) {
         $b = $this->result_db->builder();
         $res = $b
-            ->select("commit_hash")
+            ->select("commit_hash", "commit_author")
             ->from("runs")
             ->where("id = ?")
             ->setParameter(0, $run)
