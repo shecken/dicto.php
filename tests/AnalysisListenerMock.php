@@ -20,10 +20,6 @@ class AnalysisListenerMock implements Listener {
         $this->violations[] = $violation;
     }
 
-    public function report_violation_ranking() {
-        
-    }
-
     public $begin_run_called_with = false;
     public function begin_run($commit_hash, $commit_author) {
         $this->begin_run_called_with = $commit_hash;
