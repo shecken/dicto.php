@@ -1,19 +1,21 @@
 <?php
+function cmp($a, $b) {
+    if($a["summary"] > $b["summary"]) {
+        return -1;
+    } else if($a["summary"] > $b["summary"]) {
+        return 1;
+    }
+
+    return 0;
+}
 
 function template_vio_ranking_bootstrap(array $report) {
     $report = array_map(function($r) {
-        $r["clean"] = $r["added"] - $r["resolved"];
+        $r["summary"] = $r["resolved"] - $r["added"];
+        return $r;
     }, $report);
 
-    $report = uasort(function($a, $b) {
-        if($a["clean"] < $b["clean"]) {
-            return -1;
-        } else if($a["clean"] > $b["clean"]) {
-            return 1;
-        }
-
-        return 0;
-    });
+    uasort($report, 'cmp');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +58,45 @@ function template_vio_ranking_bootstrap(array $report) {
                 </a><br />
                 <small>automated architectural tests</small>
             </h1>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        Leaderboard for resolving violations
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th>Name</th>
+                                        <th>Resolved</th>
+                                        <th>Added</th>
+                                        <th>Summary Resolved</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($report as $name => $values) {
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $name; ?></td>
+                                                <td><?php echo $values["resolved"]; ?></td>
+                                                <td><?php echo $values["added"]; ?></td>
+                                                <td><?php echo $values["summary"]; ?></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
