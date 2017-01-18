@@ -44,9 +44,10 @@ class ResultDB extends DB implements Listener {
         $this->builder()
             ->insert("runs")
             ->values(array
-                ( "commit_hash" => "?"
+                ( "commit_hash" => "?",
+                  "commit_author" => "?"
                 ))
-            ->setParameter(0, $commit_hash)
+            ->setParameter(0, $commit_hash, $commit_author)
             ->execute();
         $this->current_run_id = (int)$this->connection->lastInsertId();
         $this->current_author = $commit_author;
@@ -289,6 +290,10 @@ class ResultDB extends DB implements Listener {
             );
         $run_table->addColumn
             ( "commit_hash", "string"
+            , array("notnull" => true)
+            );
+        $run_table->addColumn
+            ( "commit_author", "string"
             , array("notnull" => true)
             );
         // TODO: maybe add time
