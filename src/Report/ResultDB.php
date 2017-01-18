@@ -169,20 +169,6 @@ class ResultDB extends DB implements Listener {
     // Helpers
 
     /**
-     * Get a queries object
-     *
-     * @return Queries
-     */
-    protected function getQueries() {
-        if($this->queries === null) {
-            $this->queries = new Queries($this);
-        }
-
-        return $this->queries;
-    }
-
-
-    /**
      * @param   Rule    $rule
      * @return  int|null
      */
