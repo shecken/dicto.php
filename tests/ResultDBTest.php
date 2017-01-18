@@ -84,6 +84,7 @@ class ResultDBTest extends PHPUnit_Framework_TestCase {
         $expected = array(array
             ( "id" => "1"
             , "commit_hash" => "#COMMIT_HASH#"
+            , "commit_author" => "#COMMIT_AUTHOR#"
             ));
         $this->assertEquals($expected, $res);
     }
@@ -101,10 +102,12 @@ class ResultDBTest extends PHPUnit_Framework_TestCase {
             ( array
                 ( "id" => "1"
                 , "commit_hash" => "#COMMIT_HASH1#"
+                , "commit_author" => "#COMMIT_AUTHOR1#"
                 )
             , array
                 ( "id" => "2"
                 , "commit_hash" => "#COMMIT_HASH2#"
+                , "commit_author" => "#COMMIT_AUTHOR2#"
                 )
             );
         $this->assertEquals($expected, $res);

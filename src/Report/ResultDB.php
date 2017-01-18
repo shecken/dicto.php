@@ -47,7 +47,8 @@ class ResultDB extends DB implements Listener {
                 ( "commit_hash" => "?",
                   "commit_author" => "?"
                 ))
-            ->setParameter(0, $commit_hash, $commit_author)
+            ->setParameter(0, $commit_hash)
+            ->setParameter(1, $commit_author)
             ->execute();
         $this->current_run_id = (int)$this->connection->lastInsertId();
         $this->current_author = $commit_author;
