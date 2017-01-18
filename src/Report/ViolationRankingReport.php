@@ -27,13 +27,12 @@ class ViolationRankingReport extends Report {
         $all_runs = $this->queries->all_runs();
         $vio_ranking = array();
 
-        foreach ($all_runs as $cur_run) {
-            try {
-                $prev_run = $this->queries->run_with_different_commit_before($cur_run);
-            } catch(\RuntimeException $e) {
-                continue;
-            }
+        //remove first run. 
+        //it is not possible to determine resolved or addeded violations without previous run
+        array_shift($all_runs);
 
+        foreach ($all_runs as $cur_run) {
+            $prev_run = $this->queries->run_with_different_commit_before($cur_run);
             $current = $this->queries->run_info($cur_run);
 
             if(!array_key_exists($current["commit_author"], $vio_ranking)) {
