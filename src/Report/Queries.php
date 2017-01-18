@@ -28,7 +28,7 @@ class Queries {
             ->orderBy("id", "ASC");
 
         $rows = $q->execute();
-        $res = 0;
+        $res = array();
         while($r = $rows->fetch()) {
             $res[] = (int)$r["id"];
         }
